@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["@chakra-ui/react"],
+      external: ["@chakra-ui/react",'axios'],
     },
   },
 });
