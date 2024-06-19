@@ -12,7 +12,7 @@ import {
     Text,
     VStack,
     Divider,
-} from '@chakra-ui/react';
+} from '../../../node_modules/@chakra-ui/react';
 import { calculateQuotation, fetchBusinesses, fetchEmirates, fetchFreezones, fetchPackages } from '../../services/DemoService/landingFormPageService';
 
 
