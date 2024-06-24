@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://164.52.203.34:8000/api/v1";
+const BASE_URL = "https://164.52.203.34.nip.io/api/v1";
 
 export const fetchEmirates = async () => {
   return await axios
@@ -61,9 +61,15 @@ export const calculateQuotation = async (
   packageId
 ) => {
   try {
+    console.log(localStorage.getItem("token"));
     const response = await axios.get(
       `${BASE_URL}/quotation/generate/?emirate_id=${emirateId}&freezone_id=${freezoneId}&business_activity_id=${businessId}&visa_package_id=${packageId}`,
-      { responseType: "text" } // Set responseType to 'text' to get the PDF as a string
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        responseType: "text",
+      }
     );
     console.log(response);
     handlePdfResponse(response.data);

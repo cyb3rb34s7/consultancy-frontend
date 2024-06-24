@@ -9,7 +9,8 @@ export const login = async (email, password) => {
       email,
       password,
     });
-    return response.data.token;
+    // console.log(response.data.access);
+    return response.data.access;
   } catch (error) {
     throw new Error(error.response?.data?.message || "Login failed");
   }
@@ -38,11 +39,11 @@ export const register = async (
   }
 };
 
-export const verifyEmail = async (email, code) => {
+export const verifyEmail = async (email, otp) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/verify-email/`, {
+    const response = await axios.post(`${BASE_URL}/auth/validate-otp/`, {
       email,
-      code,
+      otp,
     });
     return response.data;
   } catch (error) {

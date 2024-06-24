@@ -36,6 +36,7 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const [otp, setOtp] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [returnedOtp, setReturnedOtp] = useState('');
   const toast = useToast();
 
   const handleSubmit = async (e) => {
@@ -57,10 +58,13 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
           setIsLoading(false);
           return;
         }
-        await register(firstName, lastName, password, confirmPassword, phoneNumber, email);
+        const response = await register(firstName, lastName, password, confirmPassword, phoneNumber, email);
+        console.log(response)
+        setReturnedOtp(response.data.toString())
+
         toast({
           title: 'Registration successful',
-          description: 'Please enter the OTP sent to your email',
+          description: 'Please enter the OTP shown on the screen',
           status: 'success',
           duration: 5000,
           isClosable: true,
@@ -83,7 +87,7 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
     setIsLoading(true);
     try {
       const response = await verifyEmail(email, otp);
-      onLoginSuccess(response.token);
+      onLoginSuccess(response.access);
       onClose();
       toast({
         title: 'Email verified',
@@ -92,6 +96,7 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
         duration: 3000,
         isClosable: true,
       });
+      setShowOtpInput(false);
     } catch (error) {
       toast({
         title: 'Error',
@@ -171,7 +176,12 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
             </form>
           ) : (
             <VStack spacing={4}>
-              <Text>Enter the OTP sent to your email</Text>
+              <Text>Enter the OTP shown below:</Text>
+              {returnedOtp && (
+                <Text fontSize="2xl" fontWeight="bold" color="blue.500">
+                  {typeof returnedOtp === 'object' ? JSON.stringify(returnedOtp) : returnedOtp}
+                </Text>
+              )}
               <HStack>
                 <PinInput otp onComplete={(value) => setOtp(value)}>
                   <PinInputField />
