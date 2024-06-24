@@ -1,7 +1,7 @@
 // AuthService.js
 import axios from "axios";
 
-const BASE_URL = "http://164.52.203.34:8000/api/v1";
+const BASE_URL = "https://164.52.203.34.nip.io/api/v1";
 
 export const login = async (email, password) => {
   try {

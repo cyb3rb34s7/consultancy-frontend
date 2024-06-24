@@ -46,6 +46,12 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
       if (isLogin) {
         const token = await login(email, password);
         onLoginSuccess(token);
+        toast({
+          title: 'Login successful',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
         onClose();
       } else {
         if (password !== confirmPassword) {
