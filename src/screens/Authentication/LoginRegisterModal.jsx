@@ -52,6 +52,8 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
           duration: 3000,
           isClosable: true,
         });
+        setEmail('');
+        setPassword('')
         onClose();
       } else {
         if (password !== confirmPassword) {
@@ -65,6 +67,13 @@ const LoginRegisterModal = ({ isOpen, onClose, onLoginSuccess }) => {
           return;
         }
         const response = await register(firstName, lastName, password, confirmPassword, phoneNumber, email);
+        setPassword('')
+        setConfirmPassword('')
+        setFirstName('')
+        setLastName('')
+        setPhoneNumber('')
+
+
         console.log(response)
         setReturnedOtp(response.data.toString())
 
